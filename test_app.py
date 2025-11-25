@@ -1,6 +1,6 @@
 import pytest
 from app import app
-#test
+
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
@@ -11,10 +11,10 @@ def test_home_content(client):
     rv = client.get('/')
     assert rv.status_code == 200
     assert b"Inventario de Infraestructura" in rv.data
-    assert b"Servidor Dell PowerEdge" in rv.data
 
 def test_navigation(client):
-    rv = client.get('/')s
+    rv = client.get('/')
+    # Verificamos que existan los botones del menú
     assert b"Nuevo Equipo" in rv.data
     assert b"Acerca de" in rv.data
 

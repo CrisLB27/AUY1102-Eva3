@@ -23,7 +23,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=crislb27
-            -Dsonar.projectKey=CrisLB27_AUY1102-Eva3
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.python.version=3.9
 
   snyk-scan:

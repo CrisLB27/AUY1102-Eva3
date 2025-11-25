@@ -7,18 +7,17 @@ def client():
     with app.test_client() as client:
         yield client
 
-def test_home_content(client):
+def test_home_page(client):
+    """Prueba que la página carga y muestra el inventario"""
     rv = client.get('/')
+    
+    # 1. Verificar que la página responde bien (Código 200)
     assert rv.status_code == 200
-    assert b"Inventario de Infraestructura" in rv.data
+    
+    # 2. Verificar el título NUEVO de la versión simple
+    # Nota: b"" indica que buscamos bytes, necesario en Flask testing
+    assert b"Inventario de Equipos TI" in rv.data
+    
+    # 3. Verificar que aparezcan datos del inventario
     assert b"Servidor Dell PowerEdge" in rv.data
-
-def test_navigation(client):
-    rv = client.get('/')s
-    assert b"Nuevo Equipo" in rv.data
-    assert b"Acerca de" in rv.data
-
-def test_add_page(client):
-    rv = client.get('/add')
-    assert rv.status_code == 200
-    assert b"Registrar Nuevo Equipo" in rv.data
+    assert b"Switch Cisco Catalyst" in rv.data

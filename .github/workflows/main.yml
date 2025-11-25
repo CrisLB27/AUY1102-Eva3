@@ -1,5 +1,4 @@
 name: CI/CD Pipeline 1.0
-
 on:
   push:
     branches:
@@ -69,16 +68,16 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:1.0 .
       - name: Run Tests
         run: |
-          docker run --rm ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:latest pytest test_app.py
+          docker run --rm ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:1.0 pytest test_app.py
 #Docker Scout
       - name: Docker Scout
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:latest
+          image: ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:1.0
           ignore-unchanged: true
           only-severities: critical,high
           exit-code: true
@@ -86,4 +85,4 @@ jobs:
           dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/evaluacion3-app:1.0

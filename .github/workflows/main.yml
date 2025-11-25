@@ -26,8 +26,20 @@ jobs:
             -Dsonar.projectKey=CrisLB27_AUY1102-Eva3
             -Dsonar.python.version=3.9
 
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+          args: --severity-threshold=high --org=crislb27
+
   build-test-push:
-    needs: sonarcloud-scan
+    needs: [sonarcloud-scan, snyk-scan]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

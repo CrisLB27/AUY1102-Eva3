@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - Paso 1 SonarCloud
+name: CI/CD Pipeline
 
 on:
   push:
@@ -38,8 +38,24 @@ jobs:
           command: code test
           args: --severity-threshold=high --org=crislb27
 
+  ghas-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Dependency Review (GHAS)
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: high
+
+      - name: Secret Scanning (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build-test-push:
-    needs: [sonarcloud-scan, snyk-scan]
+    needs: [sonarcloud-scan, snyk-scan, ghas-security]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

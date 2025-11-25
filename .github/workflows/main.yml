@@ -22,7 +22,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=CrisLB27
+            -Dsonar.organization=crislb27
             -Dsonar.projectKey=CrisLB27_AUY1102-Eva3
             -Dsonar.python.version=3.9
 

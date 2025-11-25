@@ -10,7 +10,7 @@ inventory = [
 ]
 
 
-
+#pagina
 TEMA_BASE = """
 <!DOCTYPE html>
 <html lang="es">
